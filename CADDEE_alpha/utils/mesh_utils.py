@@ -25,7 +25,9 @@ def import_mesh(file, component:lg.Geometry, rescale:list=[1,1,1], remove_dupes=
     if remove_dupes:
         nnodes = nodes.shape[0]
         # remove duplicate nodes
-        nodes, index = np.unique(nodes, return_inverse=True, axis=0)
+        rounded_nodes = np.round(nodes,decimals=5)
+        _, o_index, index = np.unique(rounded_nodes, return_index=True, return_inverse=True, axis=0)
+        nodes = nodes[o_index]
         #print('dupes removed in ' + str(end-start) + ' seconds')
         # map indices in cells to new indices
         cells = []
